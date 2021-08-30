@@ -2,11 +2,16 @@ Attribute VB_Name = "02_Win_Control"
 Option Compare Database:    Option Explicit
 
 Public Function f_DeskTopPath() As Boolean
-    DeskTopPath = ""
-    Dim WSH As Object
-    Set WSH = CreateObject("Wscript.Shell")
-    DeskTopPath = WSH.SpecialFolders("Desktop")
-    Set WSH = Nothing
+    On Error TOGO Error
+        DeskTopPath = ""
+        Dim WSH As Object
+        Set WSH = CreateObject("Wscript.Shell")
+        DeskTopPath = WSH.SpecialFolders("Desktop")
+        Set WSH = Nothing
+        f_DeskTopPath = True
+        Exit Fucntion
+Error: 
+        f_DeskTopPath = False
 End Function
 
 Public Function f_CreateFolder(FolderName As String) As String
@@ -104,12 +109,12 @@ Public Function f_Kill_File(fileName As String)
 End Function
 
 Public Function f_FormtExcel(expFileB As String)
-        Dim AppObj As Object    'Excel.ApplicationƒIƒuƒWƒFƒNƒg‚ÌéŒ¾
-        Dim WBObj As Object     'Excel.WorkbookƒIƒuƒWƒFƒNƒg‚ÌéŒ¾
-        Dim WsObj As Object      'Excel.WorkSheetƒIƒuƒWƒFƒNƒg‚ÌéŒ¾
+        Dim AppObj As Object    'Excel.Applicationã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å®£è¨€
+        Dim WBObj As Object     'Excel.Workbookã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å®£è¨€
+        Dim WsObj As Object      'Excel.WorkSheetã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å®£è¨€
         Dim i As Integer
-        Set AppObj = CreateObject("Excel.Application")  'ÀsƒoƒCƒ“ƒfƒBƒ“ƒO
-        Set WBObj = AppObj.Workbooks.Open(expFileB)  'ƒ[ƒNƒuƒbƒN‚ğŠJ‚­
+        Set AppObj = CreateObject("Excel.Application")  'å®Ÿè¡Œæ™‚ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°
+        Set WBObj = AppObj.Workbooks.Open(expFileB)  'ãƒ¯ãƒ¼ã‚¯ãƒ–ãƒƒã‚¯ã‚’é–‹ã
         
         AppObj.Visible = False
         AppObj.DisplayAlerts = False
@@ -125,8 +130,8 @@ Public Function f_FormtExcel(expFileB As String)
         
         WBObj.sheets(1).Select
         
-        WBObj.Save   'ƒ[ƒNƒuƒbƒN‚ğ•Û‘¶‚·‚é
-        WBObj.Close 'ƒ[ƒNƒuƒbƒN‚ğ•Â‚¶‚é
+        WBObj.Save   'ãƒ¯ãƒ¼ã‚¯ãƒ–ãƒƒã‚¯ã‚’ä¿å­˜ã™ã‚‹
+        WBObj.Close 'ãƒ¯ãƒ¼ã‚¯ãƒ–ãƒƒã‚¯ã‚’é–‰ã˜ã‚‹
         AppObj.Quit
         i = 0
 End Function
